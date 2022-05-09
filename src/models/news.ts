@@ -1,4 +1,5 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { Tag } from './tag';
 
 @ObjectType({ description: 'news' })
 export class News {
@@ -19,4 +20,7 @@ export class News {
 
   @Field()
   modifiedDate: Date;
+
+  @Field((type) => [Tag])
+  tagList: Tag[];
 }

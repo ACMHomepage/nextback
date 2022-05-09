@@ -5,6 +5,8 @@
 ## Installation
 
 ```bash
+$ yarn
+# Or you like to using npm.
 $ npm install
 ```
 
@@ -16,26 +18,26 @@ $ docker build -f Dockerfile -t nextback-mysql
 $ docker run -p 3306:3306 nextback-mysql
 
 # development
-$ npm run start
+$ yarn start
 
 # watch mode
-$ npm run start:dev
+$ yarn start:dev
 
 # production mode
-$ npm run start:prod
+$ yarn start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+$ yarn test
 
 # e2e tests
-$ npm run test:e2e
+$ yarn test:e2e
 
 # test coverage
-$ npm run test:cov
+$ yarn test:cov
 ```
 
 ## Support

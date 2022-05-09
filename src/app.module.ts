@@ -6,17 +6,16 @@ import { Connection } from 'typeorm';
 
 import { NewsModule } from 'modules/news';
 import { UserModule } from 'modules/user';
-import { TagModule } from 'modules/tag';
 
 @Module({
   imports: [
     NewsModule,
     UserModule,
-    TagModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
       sortSchema: true,
+      context: ({ req }) => ({ req }),
     }),
     TypeOrmModule.forRoot(),
   ],

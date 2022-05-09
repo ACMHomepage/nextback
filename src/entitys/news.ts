@@ -36,7 +36,7 @@ export class News {
   @UpdateDateColumn()
   modifiedDate: Date;
 
-  @ManyToMany((type) => Tag, (tag) => tag.newsList)
+  @ManyToMany((type) => Tag, (tag) => tag.newsList, { eager: true })
   tagList: Tag[];
 
   private constructor() {}
@@ -46,6 +46,7 @@ export class News {
     result.title = newNewsData.title;
     result.content = newNewsData.content;
     result.imageUrl = newNewsData.imageUrl;
+    result.tagList = [];
 
     return result;
   }
