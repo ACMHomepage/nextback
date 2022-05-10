@@ -1,11 +1,12 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   Repository,
-  UpdateDateColumn,
 } from 'typeorm';
+
+import bcryptHash from 'utils/bcryptHash';
+import bcryptCheck from 'utils/bcryptCheck';
 
 interface NewUserData {
   email: string;
@@ -46,10 +47,14 @@ export class User {
 
     const result = new User();
     result.email = user.email;
-    result.password = user.password;
+    result.password = await bcryptHash(user.password);
     result.nickname = user.nickname;
     result.isAdmin = user.isAdmin;
 
     return result;
+  }
+
+  public async check(password: string): Promise<boolean> {
+    return await bcryptCheck(this.password, password);
   }
 }

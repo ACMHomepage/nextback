@@ -9,22 +9,28 @@ import { newUserInput } from './dto/newUserInput';
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private userRepo: Repository<User>,
   ) {}
 
-  async find(id?: number) {
+  async fingById(id: number): Promise<User> {
+    return await this.userRepo.findOne({ where: { id } });
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    return await this.userRepo.findOne({ where: { email } });
+  }
+
+  async find(id?: number): Promise<User[]> {
     if (id !== undefined) {
-      return await this.userRepository.find({
-        where: { id },
-      });
+      return [await this.fingById(id)];
     } else {
-      return await this.userRepository.find();
+      return await this.userRepo.find();
     }
   }
 
   async create(user: newUserInput) {
-    const realUser = await User.build(this.userRepository, user);
-    const createdRealUser = this.userRepository.create(realUser);
-    return this.userRepository.save(createdRealUser);
+    const realUser = await User.build(this.userRepo, user);
+    const createdRealUser = this.userRepo.create(realUser);
+    return this.userRepo.save(createdRealUser);
   }
 }

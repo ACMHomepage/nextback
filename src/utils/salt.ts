@@ -1,14 +1,8 @@
-// import cryptoRandomString from 'crypto-random-string';
+import { randomBytes } from 'crypto';
 
 /**
- * The const variable `slat` is only used for JWT.
+ * The const variable `salt` is **only** used for JWT.
  */
-// const salt = cryptoRandomString({
-//   length: 64,
-//   type: 'base64',
-// })
-
-// FIXME! The crypto-random-string is a ESM, and I cannot import it.
-const salt = 'BAT-SALT';
+const salt = randomBytes(64).toString('base64');
 
 export default salt;
