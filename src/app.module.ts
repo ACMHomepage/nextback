@@ -15,7 +15,7 @@ import { UserModule } from 'modules/user';
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
       sortSchema: true,
-      context: ({ req }) => ({ req }),
+      context: ({ req, res }) => ({ req, res }),
     }),
     TypeOrmModule.forRoot(),
   ],

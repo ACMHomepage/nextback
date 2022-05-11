@@ -9,7 +9,7 @@ import {
 import { Request } from 'express';
 
 import { News } from 'models/news';
-import isAdmin from 'utils/isAdmin';
+import verifiedJwtObject from 'utils/jwt/verifiedJwtObject';
 
 import { NewsService } from './news.service';
 import { NewsInput } from './dto/newsInput';
@@ -38,7 +38,7 @@ export class NewsResolver {
     @Args('input') newNewsData: NewsInput,
     @Context('req') req: Request,
   ): Promise<News> {
-    if (isAdmin(req))
+    if (!verifiedJwtObject(req).isAdmin)
       throw new Error(
         'You are not the admin and do not have the right to add News.'
       );
@@ -51,7 +51,7 @@ export class NewsResolver {
     @Args('input') partialNewsData: PartialNewsInput,
     @Context('req') req: Request,
   ): Promise<News> {
-    if (isAdmin(req))
+    if (!verifiedJwtObject(req).isAdmin)
       throw new Error(
         'You are not the admin and do not have the right to update news.'
       );
@@ -63,7 +63,7 @@ export class NewsResolver {
     @Args('newsId', { type: () => Int }) newsId: number,
     @Context('req') req: Request,
   ) {
-    if (isAdmin(req))
+    if (!verifiedJwtObject(req).isAdmin)
       throw new Error(
         'You are not the admin and do not have the right to remove news.'
       );
@@ -76,7 +76,7 @@ export class NewsResolver {
     @Args('newsId', { type: () => Int }) newsId: number,
     @Context('req') req: Request,
   ) {
-    if (isAdmin(req))
+    if (!verifiedJwtObject(req).isAdmin)
       throw new Error(
         'You are not the admin and do not have the right to add tag to news.'
       );
@@ -89,7 +89,7 @@ export class NewsResolver {
     @Args('newsId', { type: () => Int }) newsId: number,
     @Context('req') req: Request,
   ) {
-    if (isAdmin(req))
+    if (!verifiedJwtObject(req).isAdmin)
       throw new Error(
         'You are not the admin and do not have the right to remove tag from'
         + ' news.'

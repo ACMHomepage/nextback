@@ -1,14 +1,14 @@
 import { Mutation, Query, Resolver, Args, Int, Context } from '@nestjs/graphql';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 import { User } from 'models/user';
 import setHttpOnlyCookie from 'utils/setHttpOnlyCookie';
-import jwtoken from 'utils/jwt';
+import genJwt from 'utils/jwt/genJwt';
+import verifiedJwtObject from 'utils/jwt/verifiedJwtObject';
 
 import { UserService } from './user.service';
 import { newUserInput } from './dto/newUserInput';
 import { signInInput } from './dto/signInInput';
-import idByJwt from 'utils/idByJwt';
 
 @Resolver((of) => User)
 export class UserResolver {
@@ -17,7 +17,7 @@ export class UserResolver {
   @Query((returns) => [User])
   async userList(
     @Args('id', { type: () => Int, nullable: true }) id?: number
-  ) {
+  ): Promise<User[]> {
     return await this.userSerive.find(id);
   }
 
@@ -31,13 +31,13 @@ export class UserResolver {
   @Mutation((returns) => User)
   async signIn(
     @Args('input') signInData: signInInput,
-    @Context('req') req: Request,
-  ) {
+    @Context('res') res: Response,
+  ): Promise<User> {
     const { email, password } = signInData;
     const user = await this.userSerive.findByEmail(email);
     const verify = await user.check(password);
     if (verify) {
-      setHttpOnlyCookie(req, 'jwt', jwtoken(user.id, user.isAdmin));
+      setHttpOnlyCookie(res, 'jwt', genJwt(user.id, user.isAdmin));
       return user;
     } else {
       throw new Error('The password is not right');
@@ -45,12 +45,23 @@ export class UserResolver {
   }
 
   @Mutation((returns) => User)
+  async register(
+    @Args('input') newUserData: newUserInput,
+    @Context('res') res: any,
+  ): Promise<User> {
+    const user = await this.addUser(newUserData);
+    await this.signIn(newUserData, res);
+    return user;
+  }
+
+  @Mutation((returns) => User)
   async signOut(
     @Context('req') req: Request,
-  ) {
-    const id = idByJwt(req);
+    @Context('res') res: Response,
+  ): Promise<User> {
+    const id = verifiedJwtObject(req).id;
     const user = await this.userSerive.fingById(id);
-    setHttpOnlyCookie(req, 'jwt', '');
+    setHttpOnlyCookie(res, 'jwt', '');
     return user;
   }
 }
