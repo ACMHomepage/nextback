@@ -2,29 +2,65 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Production
+
+If you want to run as a production, you need nothing but docker (yes you even do **not** need install `yarn`, `nodejs` and so on, we will install it auto when we are building the docker-compose).
+
+```bash
+$ docker-compose -f docker-compose.yml build
+$ docker-compose -f docker-compose.yml up
+```
+
+But... if you have `yarn`, you can enter those commands instead of commands above (short and easy to input):
+
+```bash
+$ yarn dockerCompose:prod:build
+$ yarn dockerCompose:prod
+```
+
 ## Installation
 
 ```bash
 $ yarn
-# Or you like to using npm.
-$ npm install
 ```
 
-## Running the app
+## Devlopment
+
+Before run command below, you need to install the project's dependencies (see sub-section 'Installation')
+
+We can use those to run the nextback **without** database:
 
 ```bash
-# Run the database fot test in docker
-$ docker build -f Dockerfile -t nextback-mysql
-$ docker run -p 3306:3306 nextback-mysql
-
 # development
 $ yarn start
 
-# watch mode
+# development with watch mode
 $ yarn start:dev
 
 # production mode
 $ yarn start:prod
+```
+
+And if we are in devlopment, the backend will try to connect the database at `localhost` but not the `host` in `./ormconfig.json`.
+
+Yes, but we need database. You can read the sub-section 'Run a empty database' for more infomation.
+
+## Run the empty database
+
+Those command will help you if you want to create a empty database at `localhost`.
+
+```bash
+# This command will create a database docker image.
+$ yarn database:build
+
+# This command will run a database container at port 3306
+$ yarn database
+
+# This command create a cli for you.
+$ yarn database:cli
+
+# This command will remove the database container
+$ yarn database:stop
 ```
 
 ## Test
@@ -39,17 +75,3 @@ $ yarn test:e2e
 # test coverage
 $ yarn test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).

@@ -1,0 +1,16 @@
+FROM node
+
+# Go to the entrypoint
+WORKDIR /home/node/app/
+COPY . .
+
+# Install dependencies and build to dist
+RUN yarn
+RUN yarn build
+
+# Meta infomation
+USER node
+EXPOSE 8030
+
+# Init the database and run
+CMD ["yarn", "dockerCompose:prod:entry"]

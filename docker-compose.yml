@@ -1,0 +1,22 @@
+version: '3'
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile.backend
+    ports:
+      - 8030:8030
+    depends_on:
+      - mysql
+    deploy:
+      restart_policy:
+        condition: on-failure
+    environment:
+      MYSQL_URL: 'mysql://mysql:3306'
+  mysql:
+    build:
+      dockerfile: Dockerfile.mysql
+    ports:
+      - 3306:3306
+    deploy:
+      restart_policy:
+        condition: on-failure
