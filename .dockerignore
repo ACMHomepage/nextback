@@ -1,0 +1,13 @@
+# Git
+**/.git
+.git
+.gitignore
+
+# Node modules
+**/node_modules
+node_modules
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
