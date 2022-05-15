@@ -6,11 +6,13 @@ import { Connection, getConnectionOptions } from 'typeorm';
 
 import { NewsModule } from 'modules/news';
 import { UserModule } from 'modules/user';
+import { AuthModule } from 'modules/auth';
 
 @Module({
   imports: [
     NewsModule,
     UserModule,
+    AuthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',

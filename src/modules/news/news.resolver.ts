@@ -10,10 +10,10 @@ import { Request } from 'express';
 
 import { News } from 'models/news';
 import verifiedJwtObject from 'utils/jwt/verifiedJwtObject';
+import NewsInput from 'dto/newsInput';
+import PartialNewsInput from 'dto/partialNewsInput';
 
 import { NewsService } from './news.service';
-import { NewsInput } from './dto/newsInput';
-import { PartialNewsInput } from './dto/partialNewsInput';
 
 @Resolver((of) => News)
 export class NewsResolver {
@@ -40,27 +40,27 @@ export class NewsResolver {
 
   @Mutation((returns) => News)
   async addNews(
-    @Args('input') newNewsData: NewsInput,
+    @Args('news') news: NewsInput,
     @Context('req') req: Request,
   ): Promise<News> {
     if (!verifiedJwtObject(req).isAdmin)
       throw new Error(
         'You are not the admin and do not have the right to add News.'
       );
-    return await this.newsService.addNews(newNewsData);
+    return await this.newsService.addNews(news);
   }
 
   @Mutation((returns) => News)
   async updateNews(
     @Args('newsId', { type: () => Int }) newsId: number,
-    @Args('input') partialNewsData: PartialNewsInput,
+    @Args('partialNews') partialNews: PartialNewsInput,
     @Context('req') req: Request,
   ): Promise<News> {
     if (!verifiedJwtObject(req).isAdmin)
       throw new Error(
         'You are not the admin and do not have the right to update news.'
       );
-    return await this.newsService.updateNews(newsId, partialNewsData);
+    return await this.newsService.updateNews(newsId, partialNews);
   }
 
   @Mutation((returns) => News)

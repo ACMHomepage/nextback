@@ -4,9 +4,8 @@ import { Repository } from 'typeorm';
 
 import { News } from 'entitys/news';
 import { Tag } from 'entitys/tag';
-
-import { NewsInput } from './dto/newsInput';
-import { PartialNewsInput } from './dto/partialNewsInput';
+import NewsInput from 'dto/newsInput';
+import PartialNewsInput from 'dto/partialNewsInput';
 
 @Injectable()
 export class NewsService {
