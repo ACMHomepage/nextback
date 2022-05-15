@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { verify } from 'jsonwebtoken';
 
 import { News } from 'entitys/news';
 import { Tag } from 'entitys/tag';
@@ -16,20 +15,16 @@ export class NewsService {
     @InjectRepository(Tag) private tagRepo: Repository<Tag>,
   ) {}
 
-  private async getNewsById(id: number): Promise<News> {
-    return this.newsRepo.findOne(id);
-  }
-
   private async getTag(tag: string): Promise<Tag> {
     return this.tagRepo.findOne({ where: { name: tag } });
   }
 
-  async getNewsListById(id?: number): Promise<News[]> {
-    const result = await (
-      id !== undefined
-      ? this.newsRepo.find({ where: { id } })
-      : this.newsRepo.find()
-    );
+  async getNewsById(id: number): Promise<News> {
+    return this.newsRepo.findOne(id);
+  }
+
+  async getNewsListById(): Promise<News[]> {
+    const result = this.newsRepo.find()
     return result;
   }
 

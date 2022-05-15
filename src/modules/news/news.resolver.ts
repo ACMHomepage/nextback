@@ -20,10 +20,15 @@ export class NewsResolver {
   constructor(private readonly newsService: NewsService) {}
 
   @Query((returns) => [News])
-  async newsList(
-    @Args('newsId', { type: () => Int, nullable: true }) id?: number
+  async newsList() {
+    return await this.newsService.getNewsListById();
+  }
+
+  @Query((returns) => News)
+  async newsById(
+    @Args('newsId', { type: () => Int }) id: number
   ) {
-    return await this.newsService.getNewsListById(id);
+    return await this.newsService.getNewsById(id);
   }
 
   @Query((returns) => [News])
