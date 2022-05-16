@@ -5,8 +5,7 @@ import {
   Repository,
 } from 'typeorm';
 
-import bcryptHash from 'utils/bcryptHash';
-import bcryptCheck from 'utils/bcryptCheck';
+import * as bcrypt from 'utils/bcrypt';
 
 interface NewUserData {
   email: string;
@@ -47,7 +46,7 @@ export class User {
 
     const result = new User();
     result.email = user.email;
-    result.password = await bcryptHash(user.password);
+    result.password = await bcrypt.hash(user.password);
     result.nickname = user.nickname;
     result.isAdmin = user.isAdmin;
 
@@ -55,6 +54,6 @@ export class User {
   }
 
   public async check(password: string): Promise<boolean> {
-    return await bcryptCheck(this.password, password);
+    return await bcrypt.check(this.password, password);
   }
 }

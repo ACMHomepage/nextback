@@ -12,7 +12,7 @@ import getJwtFromReq from "./getJwtFromReq";
  * @param source A JWT string or just a Request object.
  * @returns A JWT object.
  */
-const verifiedJwtObject = (source: string | Request): JwtObject => {
+const getJwt = (source: string | Request): JwtObject => {
   if (typeof source !== 'string') {
     source = getJwtFromReq(source);
   }
@@ -22,4 +22,4 @@ const verifiedJwtObject = (source: string | Request): JwtObject => {
   return jwtObject;
 }
 
-export default verifiedJwtObject;
+export default getJwt;

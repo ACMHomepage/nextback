@@ -3,12 +3,10 @@ import { Request, Response } from 'express';
 
 import { User } from "models/user";
 import { UserService } from "modules/user/user.service";
-import genJwt from 'utils/jwt/genJwt';
-import verifiedJwtObject from 'utils/jwt/verifiedJwtObject';
-import setHttpOnlyCookie from 'utils/setHttpOnlyCookie';
 import { UserResolver } from "modules/user/user.resolver";
 import signInInput from 'dto/signInInput';
 import userInput from "dto/userInput";
+import * as jwt from 'utils/jwt';
 
 @Resolver((of) => User)
 export class AuthResolver {
@@ -26,7 +24,7 @@ export class AuthResolver {
     const user = await this.userSerive.findByEmail(email);
     const verify = await user.check(password);
     if (verify) {
-      setHttpOnlyCookie(res, 'jwt', genJwt(user.id, user.isAdmin));
+      jwt.set(res, { id: user.id, isAdmin: user.isAdmin });
       return user;
     } else {
       throw new Error('The password is not right');
@@ -48,9 +46,9 @@ export class AuthResolver {
     @Context('req') req: Request,
     @Context('res') res: Response,
   ): Promise<User> {
-    const id = verifiedJwtObject(req).id;
+    const id = jwt.get(req).id;
     const user = await this.userSerive.fingById(id);
-    setHttpOnlyCookie(res, 'jwt', '');
+    jwt.set(res, undefined);
     return user;
   }
 }
