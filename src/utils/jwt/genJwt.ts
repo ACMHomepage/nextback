@@ -4,10 +4,8 @@ import salt from 'utils/salt';
 
 import { JwtObject } from './type';
 
-const genJwt = (id: number, isAdmin: boolean): string => {
-  const tokenObject: JwtObject = { id, isAdmin };
-
-  const token = jwt.sign(tokenObject, salt, {
+const genJwt = (jwtObjectj: JwtObject): string => {
+  const token = jwt.sign(jwtObjectj, salt, {
     expiresIn: '15d',
     algorithm: 'HS256',
   })
