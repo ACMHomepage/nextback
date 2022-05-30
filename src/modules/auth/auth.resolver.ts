@@ -4,8 +4,8 @@ import { Request, Response } from 'express';
 import { User } from "models/user";
 import { UserService } from "modules/user/user.service";
 import { UserResolver } from "modules/user/user.resolver";
-import signInInput from 'dto/signInInput';
-import userInput from "dto/userInput";
+import SignInInput from 'dto/signInInput';
+import UserInput from "dto/userInput";
 import * as jwt from 'utils/jwt';
 
 @Resolver((of) => User)
@@ -17,7 +17,7 @@ export class AuthResolver {
 
   @Mutation((returns) => User)
   async signIn(
-    @Args('signIn') signIn: signInInput,
+    @Args('signIn') signIn: SignInInput,
     @Context('res') res: Response,
   ): Promise<User> {
     const { email, password } = signIn;
@@ -33,7 +33,7 @@ export class AuthResolver {
 
   @Mutation((returns) => User)
   async register(
-    @Args('user') user: userInput,
+    @Args('user') user: UserInput,
     @Context('res') res: any,
   ): Promise<User> {
     const userResult = await this.userResolver.addUser(user);
