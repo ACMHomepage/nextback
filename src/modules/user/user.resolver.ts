@@ -11,9 +11,15 @@ export class UserResolver {
 
   @Query((returns) => [User])
   async userList(
-    @Args('id', { type: () => Int, nullable: true }) id?: number
   ): Promise<User[]> {
-    return await this.userSerive.find(id);
+    return await this.userSerive.find();
+  }
+
+  @Query((returns) => User)
+  async userById(
+    @Args('id', { type: () => Int }) id: number
+  ): Promise<User> {
+    return await this.userSerive.fingById(id);
   }
 
   @Mutation((returns) => User)

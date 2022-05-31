@@ -20,12 +20,8 @@ export class UserService {
     return await this.userRepo.findOne({ where: { email } });
   }
 
-  async find(id?: number): Promise<User[]> {
-    if (id !== undefined) {
-      return [await this.fingById(id)];
-    } else {
-      return await this.userRepo.find();
-    }
+  async find(): Promise<User[]> {
+    return await this.userRepo.find();
   }
 
   async create(user: UserInput) {
