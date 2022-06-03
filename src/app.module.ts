@@ -7,11 +7,13 @@ import { Connection, getConnectionOptions } from 'typeorm';
 import { NewsModule } from 'modules/news';
 import { UserModule } from 'modules/user';
 import { AuthModule } from 'modules/auth';
+import { PictureBedModule } from './modules/pictureBed';
 
 import nodeEnv from 'utils/nodeEnv';
 
 @Module({
   imports: [
+    PictureBedModule,
     NewsModule,
     UserModule,
     AuthModule,
