@@ -25,7 +25,7 @@ import nodeEnv from 'utils/nodeEnv';
       useFactory: async () => {
         let options = await getConnectionOptions();
         if (options.type !== 'mysql' && options.type !== 'mariadb') {
-          throw new Error('The type should be mysql or mariadb')
+          throw new Error('The type should be mysql or mariadb');
         }
         switch (nodeEnv) {
           case 'dev':
@@ -33,7 +33,7 @@ import nodeEnv from 'utils/nodeEnv';
               ...options,
               host: 'localhost',
               synchronize: true,
-            }
+            };
             break;
           case 'prod':
             break;
@@ -41,17 +41,16 @@ import nodeEnv from 'utils/nodeEnv';
             options = {
               ...options,
               host: 'localhost',
-            }
+            };
             break;
           default:
             throw new Error(`Unsupport node env: ${nodeEnv}`);
         }
         return options;
-      }
+      },
     }),
   ],
 })
-
 export class AppModule {
   constructor(private connection: Connection) {}
 }

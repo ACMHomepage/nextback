@@ -1,11 +1,11 @@
-import { Mutation, Resolver, Args, Context } from "@nestjs/graphql";
+import { Mutation, Resolver, Args, Context } from '@nestjs/graphql';
 import { Request, Response } from 'express';
 
-import { User } from "models/user";
-import { UserService } from "modules/user/user.service";
-import { UserResolver } from "modules/user/user.resolver";
+import { User } from 'models/user';
+import { UserService } from 'modules/user/user.service';
+import { UserResolver } from 'modules/user/user.resolver';
 import SignInInput from 'dto/signInInput';
-import UserInput from "dto/userInput";
+import UserInput from 'dto/userInput';
 import * as jwt from 'utils/jwt';
 
 @Resolver((of) => User)

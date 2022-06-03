@@ -23,12 +23,13 @@ export class NewsService {
   }
 
   async getNewsListById(): Promise<News[]> {
-    const result = this.newsRepo.find()
+    const result = this.newsRepo.find();
     return result;
   }
 
   async getNewsListByTag(tag: string): Promise<News[]> {
-    const result = await this.newsRepo.createQueryBuilder('news')
+    const result = await this.newsRepo
+      .createQueryBuilder('news')
       .leftJoinAndSelect('news.tagList', 'tag')
       .where('tag.name = :tagname', { tagname: tag })
       .getMany();
@@ -42,7 +43,8 @@ export class NewsService {
   }
 
   async updateNews(newsId: number, news: PartialNewsInput): Promise<News> {
-    await this.newsRepo.createQueryBuilder('news')
+    await this.newsRepo
+      .createQueryBuilder('news')
       .update(News)
       .set(news)
       .where('id = :id', { id: newsId })
@@ -62,7 +64,7 @@ export class NewsService {
     let realTag: Tag;
     try {
       realTag = await this.getTag(tag);
-    } catch(error) {
+    } catch (error) {
       realTag = await Tag.build(this.tagRepo, { name: tag });
       realTag = this.tagRepo.create(realTag);
       realTag = await this.tagRepo.save(realTag);
@@ -79,7 +81,7 @@ export class NewsService {
     let realTag: Tag;
     try {
       realTag = await this.getTag(tag);
-    } catch(error) {
+    } catch (error) {
       // Even do not have the tag.
       return news;
     }
@@ -91,9 +93,9 @@ export class NewsService {
       if (needRemoveFlag) return;
       if (realTag.id === value.id) {
         needRemoveFlag = true;
-        index = iterIndex
+        index = iterIndex;
       }
-    })
+    });
     if (!needRemoveFlag) return news;
 
     if (index > -1) {

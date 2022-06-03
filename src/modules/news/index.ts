@@ -8,13 +8,7 @@ import { NewsResolver } from './news.resolver';
 import { NewsService } from './news.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([News]),
-    TypeOrmModule.forFeature([Tag]),
-  ],
-  providers: [
-    NewsResolver,
-    NewsService,
-  ],
+  imports: [TypeOrmModule.forFeature([News]), TypeOrmModule.forFeature([Tag])],
+  providers: [NewsResolver, NewsService],
 })
 export class NewsModule {}

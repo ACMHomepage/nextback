@@ -14,8 +14,8 @@ $ docker-compose -f docker-compose.yml up
 But... if you have `yarn`, you can enter those commands instead of commands above (short and easy to input):
 
 ```bash
-$ yarn dockerCompose:prod:build
-$ yarn dockerCompose:prod
+$ yarn docker-compose build
+$ yarn docker-Compose start
 ```
 
 ## Installation
@@ -31,14 +31,11 @@ Before run command below, you need to install the project's dependencies (see su
 We can use those to run the nextback **without** database:
 
 ```bash
-# development
-$ yarn start
-
-# development with watch mode
-$ yarn start:dev
+# development mode with watch mode
+$ yarn start --mode=dev
 
 # production mode
-$ yarn start:prod
+$ yarn start --mode=prod
 ```
 
 And if we are in devlopment, the backend will try to connect the database at `localhost` but not the `host` in `./ormconfig.json`.
@@ -51,17 +48,22 @@ Those command will help you if you want to create a empty database at `localhost
 
 ```bash
 # This command will create a database docker image.
-$ yarn database:build
+$ yarn database build
 
 # This command will run a database container at port 3306
-$ yarn database
+$ yarn database start
 
 # This command create a cli for you.
-$ yarn database:cli
+$ yarn database cli
 
 # This command will remove the database container
-$ yarn database:stop
+$ yarn database stop
 ```
+
+### Debug
+
+1. First of all, try to enter `yarn database stop` and retry.
+2. Maybe you find that the we cannot get the port 3306. Try to use `lsof -i:3306` (or `sudo lsof -i:3306`). And kill it (if it is not your machine, ask manager).
 
 ## Test
 
