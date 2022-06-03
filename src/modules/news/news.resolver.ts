@@ -1,11 +1,4 @@
-import {
-  Mutation,
-  Query,
-  Resolver,
-  Args,
-  Int,
-  Context,
-} from '@nestjs/graphql';
+import { Mutation, Query, Resolver, Args, Int, Context } from '@nestjs/graphql';
 import { Request } from 'express';
 
 import { News } from 'models/news';
@@ -25,16 +18,12 @@ export class NewsResolver {
   }
 
   @Query((returns) => News)
-  async newsById(
-    @Args('newsId', { type: () => Int }) id: number
-  ) {
+  async newsById(@Args('newsId', { type: () => Int }) id: number) {
     return await this.newsService.getNewsById(id);
   }
 
   @Query((returns) => [News])
-  async newsListByTag(
-    @Args('tag', { type: () => String }) tag: string
-  ) {
+  async newsListByTag(@Args('tag', { type: () => String }) tag: string) {
     return await this.newsService.getNewsListByTag(tag);
   }
 
@@ -45,7 +34,7 @@ export class NewsResolver {
   ): Promise<News> {
     if (!jwt.get(req).isAdmin)
       throw new Error(
-        'You are not the admin and do not have the right to add News.'
+        'You are not the admin and do not have the right to add News.',
       );
     return await this.newsService.addNews(news);
   }
@@ -58,7 +47,7 @@ export class NewsResolver {
   ): Promise<News> {
     if (!jwt.get(req).isAdmin)
       throw new Error(
-        'You are not the admin and do not have the right to update news.'
+        'You are not the admin and do not have the right to update news.',
       );
     return await this.newsService.updateNews(newsId, partialNews);
   }
@@ -70,7 +59,7 @@ export class NewsResolver {
   ) {
     if (!jwt.get(req).isAdmin)
       throw new Error(
-        'You are not the admin and do not have the right to remove news.'
+        'You are not the admin and do not have the right to remove news.',
       );
     return await this.newsService.removeNewsById(newsId);
   }
@@ -83,7 +72,7 @@ export class NewsResolver {
   ) {
     if (!jwt.get(req).isAdmin)
       throw new Error(
-        'You are not the admin and do not have the right to add tag to news.'
+        'You are not the admin and do not have the right to add tag to news.',
       );
     return await this.newsService.addTagToNews(tag, newsId);
   }
@@ -96,8 +85,8 @@ export class NewsResolver {
   ) {
     if (!jwt.get(req).isAdmin)
       throw new Error(
-        'You are not the admin and do not have the right to remove tag from'
-        + ' news.'
+        'You are not the admin and do not have the right to remove tag from' +
+          ' news.',
       );
     return await this.newsService.removeTagFromNews(tag, newsId);
   }

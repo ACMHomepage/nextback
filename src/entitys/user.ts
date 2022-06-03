@@ -1,9 +1,4 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  Repository,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, Repository } from 'typeorm';
 
 import * as bcrypt from 'utils/bcrypt';
 

@@ -13,4 +13,4 @@ USER node
 EXPOSE 8030
 
 # Init the database and run
-CMD ["yarn", "dockerCompose:prod:entry"]
+CMD ["yarn", "start", "--mode=prod"]

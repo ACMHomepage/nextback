@@ -7,7 +7,7 @@ import { JwtObject } from './type';
 
 /**
  * Set the jwt to response.
- * 
+ *
  * @param res The response object, where we can set the http-only cookie.
  * @param jwtObject The object of jwt.
  */
@@ -17,6 +17,6 @@ const setJwt = (res: Response, jwtObject?: JwtObject) => {
   } else {
     httpOnlyCookie.set(res, 'jwt', genJwt(jwtObject));
   }
-}
+};
 
 export default setJwt;

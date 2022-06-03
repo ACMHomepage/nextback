@@ -8,8 +8,8 @@ const genJwt = (jwtObjectj: JwtObject): string => {
   const token = jwt.sign(jwtObjectj, salt, {
     expiresIn: '15d',
     algorithm: 'HS256',
-  })
+  });
   return token;
-}
+};
 
 export default genJwt;
