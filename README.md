@@ -2,6 +2,29 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Quick start (dev)
+
+Run the script below by lines in the terminal helps.
+**Do assure MySQL and Docker be installed properly**
+```bash
+git clone https://github.com/ACMHomepage/nextback.git
+sudo service mysql stop # Or the port:3306 will be used
+cd ./nextback
+yarn
+yarn database build
+yarn database start
+yarn start --mode=dev
+# Done!
+```
+
+To stop the backend, type these in the terminal:
+
+```bash
+^Z # Stop the backend
+yarn database stop # Remove the db container
+# Done!
+```
+
 ## Production
 
 If you want to run as a production, you need nothing but docker (yes you even do **not** need install `yarn`, `nodejs` and so on, we will install it auto when we are building the docker-compose).
@@ -60,11 +83,6 @@ $ yarn database cli
 $ yarn database stop
 ```
 
-### Debug
-
-1. First of all, try to enter `yarn database stop` and retry.
-2. Maybe you find that the we cannot get the port 3306. Try to use `lsof -i:3306` (or `sudo lsof -i:3306`). And kill it (if it is not your machine, ask manager).
-
 ## Test
 
 ```bash
@@ -77,3 +95,9 @@ $ yarn test:e2e
 # test coverage
 $ yarn test:cov
 ```
+
+## Problems may encounter
+
+1. First of all, try to enter `yarn database stop` and retry.
+2. Maybe you find that the we cannot get the port 3306. Try to use `lsof -i:3306` (or `sudo lsof -i:3306`). And kill it (if it is not your machine, ask manager).
+3. If encountering permission problems, like `Error: EACCES: permission denied, open 'schema.gql'`, changing its ownership helps. Ex., `sudo chown <myname> ./schema.gql`.
