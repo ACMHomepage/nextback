@@ -18,6 +18,7 @@ import nodeEnv from 'utils/nodeEnv';
     UserModule,
     AuthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
+      path: '/graphql/v1',
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
       sortSchema: true,
