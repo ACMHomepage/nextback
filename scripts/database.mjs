@@ -1,3 +1,5 @@
+import { spawnSync } from 'node:child_process';
+
 const image = 'acmhomepage-nextback-database';
 
 const buildCommand = async () => {
@@ -9,7 +11,13 @@ const startCommand = async () => {
 };
 
 const cliCommand = async () => {
-  await $`mysql -h localhost -P 3306 -u root -proot`;
+  // TODO: Why we use spawnSync rather than `$` function:
+  // https://github.com/google/zx/discussions/426
+  spawnSync(
+    "mysql",
+    ['-h', 'localhost', '-P', '3306', '-u', 'root', '-proot'],
+    { stdio: 'inherit' }
+  );
 };
 
 const stopCommand = async () => {
